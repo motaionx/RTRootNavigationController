@@ -96,6 +96,9 @@
 
 
 static inline UIViewController *RTSafeUnwrapViewController(UIViewController *controller) {
+    if ([controller isKindOfClass:NSClassFromString(@"BXPopupBaseViewController")]) {
+        return controller;
+    }
     if ([controller isKindOfClass:[RTContainerController class]]) {
         return ((RTContainerController *)controller).contentViewController;
     }
@@ -107,6 +110,9 @@ __attribute((overloadable)) static inline UIViewController *RTSafeWrapViewContro
                                                                                      BOOL withPlaceholder,
                                                                                      UIBarButtonItem *backItem,
                                                                                      NSString *backTitle) {
+    if ([controller isKindOfClass:NSClassFromString(@"BXPopupBaseViewController")]) {
+        return controller;
+    }
     if (![controller isKindOfClass:[RTContainerController class]] &&
         ![controller.parentViewController isKindOfClass:[RTContainerController class]]) {
         return [RTContainerController containerControllerWithController:controller
